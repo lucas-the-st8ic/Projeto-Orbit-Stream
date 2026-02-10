@@ -22,6 +22,5 @@ public class OrbitStreamApplication implements CommandLineRunner {
         var json = consumoApi.buscarDados("http://www.omdbapi.com/?t=Sons+of+Anarchy&apikey=32905f12");
         System.out.println(json);
 
-        
     }
 }

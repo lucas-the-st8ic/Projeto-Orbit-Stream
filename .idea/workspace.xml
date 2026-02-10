@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="96bc7745-ef78-48c2-b26b-72f5306a49bc" name="Changes" comment="" />
+    <list default="true" id="96bc7745-ef78-48c2-b26b-72f5306a49bc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OrbitStream/src/main/java/br/com/alura/OrbitStream/OrbitStreamApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrbitStream/src/main/java/br/com/alura/OrbitStream/OrbitStreamApplication.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,7 +34,7 @@
     "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Lucas/OneDrive/Documentos/GitHub/Projeto-Orbit-Stream",
+    "last_opened_file_path": "C:/Users/Lucas/Documents/GitHub/Projeto-Orbit-Stream",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -47,8 +51,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.28539.13" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-IU-252.28539.13" />
       </set>
     </attachedChunks>
   </component>
@@ -62,6 +66,7 @@
       <workItem from="1770652776911" duration="48000" />
       <workItem from="1770653004846" duration="507000" />
       <workItem from="1770655665462" duration="39000" />
+      <workItem from="1770749017377" duration="710000" />
     </task>
     <servers />
   </component>
