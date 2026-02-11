@@ -1,6 +1,9 @@
 package br.com.alura.OrbitStream;
 
+import br.com.alura.OrbitStream.model.DadosSerie;
 import br.com.alura.OrbitStream.service.ConsumoApi;
+import br.com.alura.OrbitStream.service.ConverterDados;
+import br.com.alura.OrbitStream.service.IConverteDados;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +24,12 @@ public class OrbitStreamApplication implements CommandLineRunner {
 
         var json = consumoApi.buscarDados("http://www.omdbapi.com/?t=Sons+of+Anarchy&apikey=32905f12");
         System.out.println(json);
+
+        ConverterDados conversor = new ConverterDados();
+        
+        DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
+
+        System.out.println(dados);
 
     }
 }
