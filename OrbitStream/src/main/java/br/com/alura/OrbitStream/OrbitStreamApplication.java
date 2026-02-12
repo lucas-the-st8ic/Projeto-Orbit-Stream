@@ -1,5 +1,6 @@
 package br.com.alura.OrbitStream;
 
+import br.com.alura.OrbitStream.model.DadosEpisodio;
 import br.com.alura.OrbitStream.model.DadosSerie;
 import br.com.alura.OrbitStream.service.ConsumoApi;
 import br.com.alura.OrbitStream.service.ConverterDados;
@@ -12,7 +13,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class OrbitStreamApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
+    /*
+     Endereços para consulta e testes:
+        https://www.omdbapi.com/?t=Sons+of+Anarchy&apikey=32905f12
 
+        https://www.omdbapi.com/?t=Sons+of+Anarchy&Season=1&Episode=1&apikey=32905f12
+    */
     SpringApplication.run(OrbitStreamApplication.class, args);
 
     }
@@ -22,14 +28,22 @@ public class OrbitStreamApplication implements CommandLineRunner {
 
         var consumoApi = new ConsumoApi();
 
-        var json = consumoApi.buscarDados("http://www.omdbapi.com/?t=Sons+of+Anarchy&apikey=32905f12");
-        System.out.println(json);
+        /*var json = consumoApi.buscarDados("https://www.omdbapi.com/?t=Sons+of+Anarchy&apikey=32905f12");
+        System.out.println(json);*/
 
         ConverterDados conversor = new ConverterDados();
         
-        DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
+/*        DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
 
-        System.out.println(dados);
+        System.out.println(dados);*/
+
+        var json = consumoApi.buscarDados("https://www.omdbapi.com/?t=Sons+of+" +
+                "Anarchy&Season=1&Episode=1&apikey=32905f12");
+        System.out.println(json);
+        DadosEpisodio dadosEpisodio = conversor.obterDados(json, DadosEpisodio.class);
+
+
+        System.out.println(dadosEpisodio);
 
     }
 }
