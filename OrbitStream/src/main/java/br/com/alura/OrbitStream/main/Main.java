@@ -7,6 +7,7 @@ import br.com.alura.OrbitStream.service.ConsumoApi;
 import br.com.alura.OrbitStream.service.ConverterDados;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -49,5 +50,15 @@ public class Main {
         }*/
 
         temporadas.forEach(t -> t.listaDeEpisodio().forEach(e -> System.out.println(e.titulo())));
+        temporadas.forEach(System.out::println);
+
+        List<String> nomes = Arrays.asList("Jacque", "Iasmin", "Paulo", "Rodrigo", "Nico");
+
+        nomes.stream()
+                .sorted()
+                    .limit(3)
+                        .filter(n -> n.startsWith("I"))
+                            .map(String::toUpperCase)
+                                .forEach(System.out::println);
     }
 }
