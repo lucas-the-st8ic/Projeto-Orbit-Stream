@@ -6,10 +6,8 @@ import br.com.alura.OrbitStream.model.DadosTemporada;
 import br.com.alura.OrbitStream.service.ConsumoApi;
 import br.com.alura.OrbitStream.service.ConverterDados;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -39,26 +37,29 @@ public class Main {
             temporadas.add(dadosTemporada);
         }
 
-        /*temporadas.forEach(System.out::println);*/
+        temporadas.forEach(System.out::println);
 
- /*       for(int i = 0; i < dados.totalTemporadas(); i++){
+        for(int i = 0; i < dados.totalTemporadas(); i++){
             List<DadosEpisodio> episodiosTemporada = temporadas.get(i).listaDeEpisodio();
 
-            for (int j = 0; j < episodiosTemporada.size(); j++) {
+            for(int j = 0; j < episodiosTemporada.size(); j++) {
                 System.out.println(episodiosTemporada.get(j).titulo());
             }
-        }*/
+        }
 
         temporadas.forEach(t -> t.listaDeEpisodio().forEach(e -> System.out.println(e.titulo())));
         temporadas.forEach(System.out::println);
 
-        List<String> nomes = Arrays.asList("Jacque", "Iasmin", "Paulo", "Rodrigo", "Nico");
+        List<DadosEpisodio> listaEpisodios = temporadas.stream()
+                .flatMap(t -> t.listaDeEpisodio().stream())
+                .collect(Collectors.toList());
 
-        nomes.stream()
-                .sorted()
-                    .limit(3)
-                        .filter(n -> n.startsWith("I"))
-                            .map(String::toUpperCase)
-                                .forEach(System.out::println);
+        System.out.println("\nTop 5 episodios: ");
+        listaEpisodios.stream()
+                .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
+                .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
+                .limit(5)
+                .forEach(System.out::println);
+        
     }
 }
