@@ -3,6 +3,7 @@ package br.com.alura.OrbitStream.main;
 import br.com.alura.OrbitStream.model.DadosEpisodio;
 import br.com.alura.OrbitStream.model.DadosSerie;
 import br.com.alura.OrbitStream.model.DadosTemporada;
+import br.com.alura.OrbitStream.model.Episodio;
 import br.com.alura.OrbitStream.service.ConsumoApi;
 import br.com.alura.OrbitStream.service.ConverterDados;
 
@@ -60,6 +61,13 @@ public class Main {
                 .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
                 .limit(5)
                 .forEach(System.out::println);
-        
+
+        List<Episodio> episodios = temporadas.stream()
+                .flatMap(t -> t.listaDeEpisodio().stream()
+                        .map(d -> new Episodio(t.numeroTemporada(), d))
+                ).collect(Collectors.toList());
+
+
+        episodios.forEach(System.out::println);
     }
 }
