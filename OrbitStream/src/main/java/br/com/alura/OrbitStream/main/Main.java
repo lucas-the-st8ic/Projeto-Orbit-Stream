@@ -7,6 +7,8 @@ import br.com.alura.OrbitStream.model.Episodio;
 import br.com.alura.OrbitStream.service.ConsumoApi;
 import br.com.alura.OrbitStream.service.ConverterDados;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -69,5 +71,21 @@ public class Main {
 
 
         episodios.forEach(System.out::println);
+
+        System.out.print("A partir de que ano você deseja ver os episodios? ");
+        var ano = input.nextInt();
+        input.nextLine();
+
+        LocalDate dataBusca = LocalDate.of(ano, 1, 1);
+
+        DateTimeFormatter formattter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        episodios.stream()
+                .filter(e -> e.getDataLancamento() != null && e.getDataLancamento().isAfter(dataBusca))
+                .forEach(e -> System.out.println(
+                        "Temporada: " +e.getTemporada() +
+                                "\nEpisódio: " +e.getTitulo() +
+                                        "\nData de lançamento: " +e.getDataLancamento().format(formattter)
+                ));
     }
 }
