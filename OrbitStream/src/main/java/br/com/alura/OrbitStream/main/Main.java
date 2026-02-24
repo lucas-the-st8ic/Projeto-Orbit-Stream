@@ -57,7 +57,7 @@ public class Main {
                 .flatMap(t -> t.listaDeEpisodio().stream())
                 .collect(Collectors.toList());
 
-        System.out.println("\nTop 10 episodios: ");
+        /*System.out.println("\nTop 10 episodios: ");
         listaEpisodios.stream()
                 .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
                 .peek(e -> System.out.println("Primeiro Filtro(N/A) " + e))
@@ -67,7 +67,7 @@ public class Main {
                 .peek(e -> System.out.println("Limite " + e))
                 .map(e -> e.titulo().toUpperCase())
                 .peek(e -> System.out.println("Mapeamento " + e))
-                .forEach(System.out::println);
+                .forEach(System.out::println);*/
 
         List<Episodio> episodios = temporadas.stream()
                 .flatMap(t -> t.listaDeEpisodio().stream()
@@ -77,7 +77,22 @@ public class Main {
 
         episodios.forEach(System.out::println);
 
-        System.out.print("A partir de que ano você deseja ver os episodios? ");
+
+        System.out.print("Digite um trecho do titulo de algum episódio para pesquisa: ");
+        var trechoTitulo = input.nextLine();
+
+        Optional<Episodio> resultadoBuscaTrecho = episodios.stream()
+                .filter(e -> e.getTitulo().toUpperCase().contains(trechoTitulo.toUpperCase()))
+                .findFirst();
+
+        if (resultadoBuscaTrecho.isPresent()) {
+            System.out.println("Episódio encontrado!");
+            System.out.println("Temporada: " +resultadoBuscaTrecho.get().getTemporada() );
+        } else {
+            System.out.println("Episódio não encontrado!");
+        }
+
+        /*System.out.print("A partir de que ano você deseja ver os episodios? ");
         var ano = input.nextInt();
         input.nextLine();
 
@@ -91,6 +106,6 @@ public class Main {
                         "Temporada: " +e.getTemporada() +
                                 "\nEpisódio: " +e.getTitulo() +
                                         "\nData de lançamento: " +e.getDataLancamento().format(formattter)
-                ));
+                ));*/
     }
 }
