@@ -19,10 +19,81 @@ public class Main {
     private ConverterDados conversor = new ConverterDados();
     private final String ENDERECO = "https://www.omdbapi.com/?t=";
     private final String API_KEY = "&apikey=32905f12";
+    private List<DadosSerie> dadosSeries = new ArrayList<>();
+
 
     public void exibeMenu() {
 
-        System.out.println("*** MENU DA ORBIT STREAM ***");
+        var opcao = -1;
+
+        while(opcao != 0) {
+            var menu = """
+                    \n=========================
+                    1 - Buscar séries
+                    2 - Buscar episódios
+                    3 - Consultar Lista de séries
+                    ------------------------------
+                    0 - Sair  
+                    
+                    Digite sua opção:  """;
+
+            System.out.print(menu);
+           opcao = input.nextInt();
+            input.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    buscarSerieWeb();
+                    break;
+                case 2:
+                    buscarEpisodioPorSerie();
+                    break;
+                case 3:
+                    listarSeriesBuscadas();
+                    break;
+                case 0:
+                    System.out.println("Encerrando...");
+                    break;
+                default:
+                    System.out.println("Opção inválida");
+            }
+        }
+    }
+
+    private void buscarSerieWeb() {
+        DadosSerie dados = getDadosSerie();
+        dadosSeries.add(dados);
+        System.out.println(dados);
+    }
+
+    private DadosSerie getDadosSerie() {
+        System.out.print("Digite o nome da série para busca: ");
+        var nomeSerie = input.nextLine();
+        var json = consumoApi.buscarDados(ENDERECO + nomeSerie.replace(" ", "+") + API_KEY);
+        DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
+        return dados;
+    }
+
+    private void buscarEpisodioPorSerie(){
+        DadosSerie dadosSerie = getDadosSerie();
+        List<DadosTemporada> temporadas = new ArrayList<>();
+
+        for (int i = 1; i <= dadosSerie.totalTemporadas(); i++) {
+            var json = consumoApi.buscarDados(ENDERECO + dadosSerie.titulo().replace(" ", "+") + "&season=" + i + API_KEY);
+            DadosTemporada dadosTemporada = conversor.obterDados(json, DadosTemporada.class);
+            temporadas.add(dadosTemporada);
+        }
+        temporadas.forEach(System.out::println);
+    }
+
+    public void setDadosSeries(List<DadosSerie> dadosSeries) {
+        this.dadosSeries = dadosSeries;
+    }
+
+    private void listarSeriesBuscadas() {
+        dadosSeries.forEach(System.out::println);
+    }
+        /*System.out.println("*** MENU DA ORBIT STREAM ***");
         System.out.print("Digite o nome da série para busca: ");
         var nomeSerie = input.nextLine();
         var json = consumoApi.buscarDados( ENDERECO + nomeSerie.replace(" ", "+") + API_KEY);
@@ -78,7 +149,7 @@ public class Main {
         episodios.forEach(System.out::println);
 
 
-   /*     System.out.print("Digite um trecho do titulo de algum episódio para pesquisa: ");
+        System.out.print("Digite um trecho do titulo de algum episódio para pesquisa: ");
         var trechoTitulo = input.nextLine();
 
         Optional<Episodio> resultadoBuscaTrecho = episodios.stream()
@@ -90,9 +161,9 @@ public class Main {
             System.out.println("Temporada: " +resultadoBuscaTrecho.get().getTemporada() );
         } else {
             System.out.println("Episódio não encontrado!");
-        }*/
+        }
 
-        /*System.out.print("A partir de que ano você deseja ver os episodios? ");
+        System.out.print("A partir de que ano você deseja ver os episodios? ");
         var ano = input.nextInt();
         input.nextLine();
 
@@ -106,7 +177,7 @@ public class Main {
                         "Temporada: " +e.getTemporada() +
                                 "\nEpisódio: " +e.getTitulo() +
                                         "\nData de lançamento: " +e.getDataLancamento().format(formattter)
-                ));*/
+                ));
 
         Map<Integer, Double> avaliacoesPorTemporada = episodios.stream()
                 .filter(e -> e.getAvaliacao() > 0.0)
@@ -123,5 +194,6 @@ public class Main {
         System.out.println("Pior Episodio: " +est.getMin());
         System.out.println("Melhor Episodio: " +est.getMax());
         System.out.println("Quantidade de episódios avaliados: " +est.getCount());
-    }
+*/
 }
+
