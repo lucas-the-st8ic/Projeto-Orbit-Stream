@@ -1,9 +1,6 @@
 package br.com.alura.OrbitStream.main;
 
-import br.com.alura.OrbitStream.model.DadosEpisodio;
-import br.com.alura.OrbitStream.model.DadosSerie;
-import br.com.alura.OrbitStream.model.DadosTemporada;
-import br.com.alura.OrbitStream.model.Episodio;
+import br.com.alura.OrbitStream.model.*;
 import br.com.alura.OrbitStream.service.ConsumoApi;
 import br.com.alura.OrbitStream.service.ConverterDados;
 
@@ -91,7 +88,13 @@ public class Main {
     }
 
     private void listarSeriesBuscadas() {
-        dadosSeries.forEach(System.out::println);
+
+        List<Serie> series = new ArrayList<>();
+
+        series = dadosSeries.stream()
+                        .map(d -> new Serie(d))
+                                .collect(Collectors.toList());
+        
     }
         /*System.out.println("*** MENU DA ORBIT STREAM ***");
         System.out.print("Digite o nome da série para busca: ");
