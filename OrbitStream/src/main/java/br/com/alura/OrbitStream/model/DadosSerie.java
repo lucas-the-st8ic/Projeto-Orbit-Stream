@@ -14,7 +14,7 @@ public record DadosSerie(@JsonAlias("Title") String titulo,
 
     @Override
     public String toString() {
-        return "Titulo: " +titulo+
+        return "\nTitulo: " +titulo+
                 "\nTotal de Temporadas: " +totalTemporadas+
                 "\nAvaliações: " +avaliacao+
                 "\nGenero: " +genero+

@@ -94,12 +94,15 @@ public class Main {
         series = dadosSeries.stream()
                         .map(d -> new Serie(d))
                                 .collect(Collectors.toList());
-        
+
+    series.stream()
+            .sorted(Comparator.comparing(Serie::getGenero))
+            .forEach(System.out::println);
     }
         /*System.out.println("*** MENU DA ORBIT STREAM ***");
         System.out.print("Digite o nome da série para busca: ");
         var nomeSerie = input.nextLine();
-        var json = consumoApi.buscarDados( ENDERECO + nomeSerie.replace(" ", "+") + API_KEY);
+        var json = consumoApi.buscarDados(ENDERECO + nomeSerie.replace(" ", "+") + API_KEY);
 
         DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
         System.out.println(dados);
