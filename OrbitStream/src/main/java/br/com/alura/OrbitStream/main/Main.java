@@ -94,6 +94,8 @@ public class Main {
         series = dadosSeries.stream()
                         .map(d -> new Serie(d))
                                 .collect(Collectors.toList());
+
+        System.out.println(series);
         
     }
         /*System.out.println("*** MENU DA ORBIT STREAM ***");
