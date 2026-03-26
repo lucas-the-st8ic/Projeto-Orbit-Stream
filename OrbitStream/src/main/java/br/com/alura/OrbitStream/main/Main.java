@@ -30,12 +30,12 @@ public class Main {
                     2 - Buscar episódios
                     3 - Consultar Lista de séries
                     ------------------------------
-                    0 - Sair  
+                    0 - Sair
                     
-                    Digite sua opção:  """;
+                    Digite sua opção: """;
 
             System.out.print(menu);
-           opcao = input.nextInt();
+            opcao = input.nextInt();
             input.nextLine();
 
             switch (opcao) {
