@@ -80,7 +80,7 @@ public class Serie {
 
     @Override
     public String toString() {
-        return  "-------------------------"+
+        return  "\n-------------------------"+
                 "\nGênero: " + genero +
                 "\nSerie: " + titulo +
                 "\nTotal de temporadas: " + totalTemporadas +
@@ -88,6 +88,6 @@ public class Serie {
                 "\nAtores: " + atores +
                 "\nPoster: " + poster +
                 "\nSinopse: " + sinopse +
-                "\n============================\n";
+                "\n============================";
     }
 }

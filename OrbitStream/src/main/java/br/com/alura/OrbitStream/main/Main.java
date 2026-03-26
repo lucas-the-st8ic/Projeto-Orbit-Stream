@@ -95,7 +95,9 @@ public class Main {
                         .map(d -> new Serie(d))
                                 .collect(Collectors.toList());
 
-        System.out.println(series);
+        series.stream()
+                .sorted(Comparator.comparing(Serie::getGenero))
+                .forEach(System.out::println);
         
     }
         /*System.out.println("*** MENU DA ORBIT STREAM ***");
