@@ -1,6 +1,6 @@
 package br.com.alura.OrbitStream.service;
 
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConverterDados implements IConverteDados {
     private ObjectMapper mapper = new ObjectMapper();
@@ -8,7 +8,6 @@ public class ConverterDados implements IConverteDados {
 
     @Override
     public <T> T obterDados(String json, Class<T> classe) {
-
 
         return mapper.readValue(json, classe);
     }
