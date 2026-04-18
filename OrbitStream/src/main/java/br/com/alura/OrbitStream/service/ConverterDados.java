@@ -8,8 +8,11 @@ public class ConverterDados implements IConverteDados {
 
     @Override
     public <T> T obterDados(String json, Class<T> classe) {
-
-        return mapper.readValue(json, classe);
+        try {
+            return mapper.readValue(json, classe);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
