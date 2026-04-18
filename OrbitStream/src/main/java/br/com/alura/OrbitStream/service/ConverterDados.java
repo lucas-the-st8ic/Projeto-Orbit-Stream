@@ -1,9 +1,6 @@
 package br.com.alura.OrbitStream.service;
 
-import br.com.alura.OrbitStream.model.DadosSerie;
 import tools.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
 
 public class ConverterDados implements IConverteDados {
     private ObjectMapper mapper = new ObjectMapper();
