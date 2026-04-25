@@ -1,15 +1,16 @@
 package br.com.alura.OrbitStream.main;
 
-import br.com.alura.OrbitStream.model.*;
+import br.com.alura.OrbitStream.model.DadosSerie;
+import br.com.alura.OrbitStream.model.DadosTemporada;
+import br.com.alura.OrbitStream.model.Serie;
 import br.com.alura.OrbitStream.repository.SerieRepository;
 import br.com.alura.OrbitStream.service.ConsumoApi;
 import br.com.alura.OrbitStream.service.ConverterDados;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
@@ -99,12 +100,7 @@ public class Main {
 
     private void listarSeriesBuscadas() {
 
-        List<Serie> series = new ArrayList<>();
-
-        series = dadosSeries.stream()
-                        .map(d -> new Serie(d))
-                                .collect(Collectors.toList());
-
+        List<Serie> series = repositorio.findAll();
         series.stream()
                 .sorted(Comparator.comparing(Serie::getGenero))
                 .forEach(System.out::println);
