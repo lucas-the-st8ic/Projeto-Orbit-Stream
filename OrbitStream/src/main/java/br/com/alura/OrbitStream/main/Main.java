@@ -38,6 +38,8 @@ public class Main {
         1 - Buscar séries
         2 - Buscar episódios
         3 - Consultar lista de séries
+        4 - Consultar série por título
+        5 - Buscar séries por ator
         0 - Sair
         -------------------------
         Digite sua opção:  """;
@@ -55,6 +57,12 @@ public class Main {
                     break;
                 case 3:
                     listarSeriesBuscadas();
+                    break;
+                case 4:
+                    buscarSeriePorTitulo();
+                    break;
+                case 5:
+                    buscarSeriesPorAtor();
                     break;
                 case 0:
                     System.out.println("Encerrando...");
@@ -88,11 +96,7 @@ public class Main {
         System.out.print("Escolha uma série pelo nome: ");
         var nomeSerie = input.nextLine();
 
-        Optional<Serie> serie = series.stream()
-                .filter(s -> s.getTitulo()
-                        .toLowerCase()
-                        .contains(nomeSerie))
-                        .findFirst();
+        Optional<Serie> serie = repositorio.findByTituloContainingIgnoreCase(nomeSerie);
 
         if (serie.isPresent()) {
 
@@ -132,6 +136,35 @@ public class Main {
                 .forEach(System.out::println);
         
     }
+
+    private void buscarSeriePorTitulo() {
+        System.out.print("Escolha uma série pelo nome: ");
+        var nomeSerie = input.nextLine();
+
+        Optional<Serie> serieBuscada = repositorio.findByTituloContainingIgnoreCase(nomeSerie);
+        if (serieBuscada.isPresent()) {
+            System.out.println("========Dados da série======");
+            System.out.println(serieBuscada.get());
+        } else {
+            System.out.println("Série não encontrada!!");
+        }
+    }
+
+    private void buscarSeriesPorAtor() {
+        System.out.print("Digite o nome de um ator:");
+        var nomeAtor = input.nextLine();
+
+        System.out.print("Digite uma avaliação minima para busca:");
+        var avaliacaoMinima = input.nextDouble();
+
+        List<Serie> seriesEncontradas = repositorio
+                .findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(nomeAtor, avaliacaoMinima);
+
+        System.out.println("===Séries com este ator===");
+        seriesEncontradas.forEach(s -> System.out.println(s.getTitulo()
+        + "\nAvaliação: " + s.getAvaliacao()));
+    }
+
         /*System.out.println("*** MENU DA ORBIT STREAM ***");
         System.out.print("Digite o nome da série para busca: ");
         var nomeSerie = input.nextLine();
