@@ -12,4 +12,6 @@ public interface SerieRepository extends
         Optional<Serie> findByTituloContainingIgnoreCase(String nomeSerie);
 
         List<Serie> findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(String atores, Double avaliacao);
+
+        List<Serie> findTop5ByOrderByavaliacao();
 }

@@ -7,6 +7,7 @@ import br.com.alura.OrbitStream.model.Serie;
 import br.com.alura.OrbitStream.repository.SerieRepository;
 import br.com.alura.OrbitStream.service.ConsumoApi;
 import br.com.alura.OrbitStream.service.ConverterDados;
+import com.fasterxml.jackson.databind.exc.MissingInjectableValueExcepion;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class Main {
 
     public void exibeMenu() {
 
-        var opcao = -1;
+        var opcao = Integer.MIN_VALUE;
 
         while(opcao != 0) {
             var menu = """
@@ -40,6 +41,7 @@ public class Main {
         3 - Consultar lista de séries
         4 - Consultar série por título
         5 - Buscar séries por ator
+        6 - Top 5 séries
         0 - Sair
         -------------------------
         Digite sua opção:  """;
@@ -63,6 +65,9 @@ public class Main {
                     break;
                 case 5:
                     buscarSeriesPorAtor();
+                    break;
+                case 6:
+                    buscarTop5Series();
                     break;
                 case 0:
                     System.out.println("Encerrando...");
@@ -163,6 +168,14 @@ public class Main {
         System.out.println("===Séries com este ator===");
         seriesEncontradas.forEach(s -> System.out.println(s.getTitulo()
         + "\nAvaliação: " + s.getAvaliacao()));
+    }
+
+    private void buscarTop5Series() {
+        List<Serie> serieTop = repositorio.findTop5ByOrderByavaliacao();
+
+        System.out.println("===Top 5 séries===");
+        serieTop.forEach(s -> System.out.println(s.getTitulo()
+                + "\nAvaliação: " + s.getAvaliacao()));
     }
 
         /*System.out.println("*** MENU DA ORBIT STREAM ***");
