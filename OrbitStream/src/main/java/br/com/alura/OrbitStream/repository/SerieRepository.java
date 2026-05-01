@@ -13,5 +13,5 @@ public interface SerieRepository extends
 
         List<Serie> findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(String atores, Double avaliacao);
 
-        List<Serie> findTop5ByOrderByavaliacao();
+        List<Serie> findTop5ByOrderByAvaliacaoDesc();
 }

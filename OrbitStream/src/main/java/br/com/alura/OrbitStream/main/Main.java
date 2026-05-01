@@ -171,7 +171,7 @@ public class Main {
     }
 
     private void buscarTop5Series() {
-        List<Serie> serieTop = repositorio.findTop5ByOrderByavaliacao();
+        List<Serie> serieTop = repositorio.findTop5ByOrderByAvaliacaoDesc();
 
         System.out.println("===Top 5 séries===");
         serieTop.forEach(s -> System.out.println(s.getTitulo()
