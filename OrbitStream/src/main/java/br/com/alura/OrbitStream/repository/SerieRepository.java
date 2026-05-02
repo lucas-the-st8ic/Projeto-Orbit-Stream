@@ -1,5 +1,6 @@
 package br.com.alura.OrbitStream.repository;
 
+import br.com.alura.OrbitStream.model.Categoria;
 import br.com.alura.OrbitStream.model.Serie;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,4 +15,7 @@ public interface SerieRepository extends
         List<Serie> findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(String atores, Double avaliacao);
 
         List<Serie> findTop5ByOrderByAvaliacaoDesc();
+
+        List<Serie> findByGenero(Categoria categoria);
+
 }

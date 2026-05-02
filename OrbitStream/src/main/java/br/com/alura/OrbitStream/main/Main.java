@@ -1,9 +1,6 @@
 package br.com.alura.OrbitStream.main;
 
-import br.com.alura.OrbitStream.model.DadosSerie;
-import br.com.alura.OrbitStream.model.DadosTemporada;
-import br.com.alura.OrbitStream.model.Episodio;
-import br.com.alura.OrbitStream.model.Serie;
+import br.com.alura.OrbitStream.model.*;
 import br.com.alura.OrbitStream.repository.SerieRepository;
 import br.com.alura.OrbitStream.service.ConsumoApi;
 import br.com.alura.OrbitStream.service.ConverterDados;
@@ -42,6 +39,7 @@ public class Main {
         4 - Consultar série por título
         5 - Buscar séries por ator
         6 - Top 5 séries
+        7 - Buscar séries por categoria
         0 - Sair
         -------------------------
         Digite sua opção:  """;
@@ -68,6 +66,9 @@ public class Main {
                     break;
                 case 6:
                     buscarTop5Series();
+                    break;
+                case 7:
+                    buscarSeriesPorCategoria();
                     break;
                 case 0:
                     System.out.println("Encerrando...");
@@ -177,6 +178,18 @@ public class Main {
         serieTop.forEach(s -> System.out.println(s.getTitulo()
                 + "\nAvaliação: " + s.getAvaliacao()));
     }
+
+    private void buscarSeriesPorCategoria() {
+        System.out.println("Digite uma categoria/gênero para buscar séries:");
+        var nomeGenero = input.nextLine();
+        Categoria categoria = Categoria.fromPortugues(nomeGenero);
+
+        List<Serie> seriesPorCategoria = repositorio.findByGenero(categoria);
+
+        System.out.println("==Séries da categoria " + categoria+ "==");
+        seriesPorCategoria.forEach(System.out::println);
+    }
+
 
         /*System.out.println("*** MENU DA ORBIT STREAM ***");
         System.out.print("Digite o nome da série para busca: ");
