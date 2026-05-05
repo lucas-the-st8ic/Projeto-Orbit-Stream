@@ -4,7 +4,6 @@ import br.com.alura.OrbitStream.model.*;
 import br.com.alura.OrbitStream.repository.SerieRepository;
 import br.com.alura.OrbitStream.service.ConsumoApi;
 import br.com.alura.OrbitStream.service.ConverterDados;
-import com.fasterxml.jackson.databind.exc.MissingInjectableValueExcepion;
 
 import java.util.*;
 import java.util.stream.Collectors;
