@@ -40,6 +40,8 @@ public class Main {
         5 - Buscar séries por ator
         6 - Top 5 séries
         7 - Buscar séries por categoria
+        8 - Buscar séries por número de temporadas e 
+        avaliação
         0 - Sair
         -------------------------
         Digite sua opção:  """;
@@ -70,6 +72,9 @@ public class Main {
                 case 7:
                     buscarSeriesPorCategoria();
                     break;
+                case 8:
+                    buscarSeriesPorNumeroDeTemporadasEAvaliacao();
+                    break;
                 case 0:
                     System.out.println("Encerrando...");
                     break;
@@ -78,6 +83,8 @@ public class Main {
             }
         }
     }
+
+
 
     private void buscarSerieWeb() {
         DadosSerie dados = getDadosSerie();
@@ -190,6 +197,22 @@ public class Main {
         seriesPorCategoria.forEach(System.out::println);
     }
 
+    private void buscarSeriesPorNumeroDeTemporadasEAvaliacao() {
+        System.out.println("Digite o número máximo de temporadas que a série deve ter: ");
+        var numeroDeTemporadas = input.nextInt();
+
+        System.out.print("Digite uma avaliação minima para busca:");
+        var avaliacaoMinima = input.nextDouble();
+
+        List<Serie> seriesEncontradas = repositorio.findByTotalTemporadasIsLessThanEqualAndAvaliacaoGreaterThanEqual(numeroDeTemporadas, avaliacaoMinima);
+
+        System.out.println("==Séries com " +numeroDeTemporadas+
+                " ou menos temporadas e avaliação maior ou igual a " + avaliacaoMinima);
+
+        seriesEncontradas.forEach(s -> System.out.println(s.getTitulo()+
+                "\nTotal de temporadas: " +s.getTotalTemporadas()+
+                "\nAvaliação: " +s.getAvaliacao()));
+    }
 
         /*System.out.println("*** MENU DA ORBIT STREAM ***");
         System.out.print("Digite o nome da série para busca: ");

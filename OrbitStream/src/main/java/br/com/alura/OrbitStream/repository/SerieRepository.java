@@ -18,4 +18,5 @@ public interface SerieRepository extends
 
         List<Serie> findByGenero(Categoria categoria);
 
+        List<Serie> findByTotalTemporadasIsLessThanEqualAndAvaliacaoGreaterThanEqual(int quantidadeTemporadas, double avaliacao);
 }
