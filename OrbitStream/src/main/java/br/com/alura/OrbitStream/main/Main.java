@@ -203,7 +203,7 @@ public class Main {
         System.out.print("Digite uma avaliação minima para busca:");
         var avaliacaoMinima = input.nextDouble();
 
-        List<Serie> seriesEncontradas = repositorio.findByTotalTemporadasIsLessThanEqualAndAvaliacaoGreaterThanEqual(numeroDeTemporadas, avaliacaoMinima);
+        List<Serie> seriesEncontradas = repositorio.seriesPorTemporadaEAvaliacao();
 
         System.out.println("==Séries com " +numeroDeTemporadas+
                 " ou menos temporadas e avaliação maior ou igual a " + avaliacaoMinima);
