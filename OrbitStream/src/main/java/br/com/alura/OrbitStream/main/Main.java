@@ -74,6 +74,9 @@ public class Main {
                 case 8:
                     buscarSeriesPorNumeroDeTemporadasEAvaliacao();
                     break;
+                case 9:
+                    buscarEpisodioPorTrecho();
+                    break;
                 case 0:
                     System.out.println("Encerrando...");
                     break;
@@ -82,7 +85,6 @@ public class Main {
             }
         }
     }
-
 
 
     private void buscarSerieWeb() {
@@ -163,10 +165,10 @@ public class Main {
     }
 
     private void buscarSeriesPorAtor() {
-        System.out.print("Digite o nome de um ator:");
+        System.out.print("Digite o nome de um ator: ");
         var nomeAtor = input.nextLine();
 
-        System.out.print("Digite uma avaliação minima para busca:");
+        System.out.print("Digite uma avaliação minima para busca: ");
         var avaliacaoMinima = input.nextDouble();
 
         List<Serie> seriesEncontradas = repositorio
@@ -186,7 +188,7 @@ public class Main {
     }
 
     private void buscarSeriesPorCategoria() {
-        System.out.println("Digite uma categoria/gênero para buscar séries:");
+        System.out.println("Digite uma categoria/gênero para buscar séries: ");
         var nomeGenero = input.nextLine();
         Categoria categoria = Categoria.fromPortugues(nomeGenero);
 
@@ -200,7 +202,7 @@ public class Main {
         System.out.println("Digite o número máximo de temporadas que a série deve ter: ");
         var numeroDeTemporadas = input.nextInt();
 
-        System.out.print("Digite uma avaliação minima para busca:");
+        System.out.print("Digite uma avaliação minima para busca: ");
         var avaliacaoMinima = input.nextDouble();
 
         List<Serie> seriesEncontradas = repositorio.seriesPorTemporadaEAvaliacao(numeroDeTemporadas, avaliacaoMinima );
@@ -211,6 +213,11 @@ public class Main {
         seriesEncontradas.forEach(s -> System.out.println(s.getTitulo()+
                 "\nTotal de temporadas: " +s.getTotalTemporadas()+
                 "\nAvaliação: " +s.getAvaliacao()));
+    }
+
+    private void buscarEpisodioPorTrecho() {
+        System.out.print("Digite o nome do episodio para busca: ");
+        var trechoEpisodio = input.nextLine();
     }
 
         /*System.out.println("*** MENU DA ORBIT STREAM ***");
