@@ -21,6 +21,6 @@ public interface SerieRepository extends
 
         List<Serie> findByTotalTemporadasIsLessThanEqualAndAvaliacaoGreaterThanEqual(int quantidadeTemporadas, double avaliacao);
 
-        @Query(value = "select * from series WHERE series.total_temporadas <= 5 AND series.avaliacao >= 7.5", nativeQuery = true)
-        List<Serie> seriesPorTemporadaEAvaliacao();
+        @Query("select s from Serie s WHERE s.totalTemporadas <= :quantidadeTemporadas AND s.avaliacao >= :avaliacao")
+        List<Serie> seriesPorTemporadaEAvaliacao(int quantidadeTemporadas, double avaliacao);
 }
