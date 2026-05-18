@@ -1,6 +1,7 @@
 package br.com.alura.OrbitStream.repository;
 
 import br.com.alura.OrbitStream.model.Categoria;
+import br.com.alura.OrbitStream.model.Episodio;
 import br.com.alura.OrbitStream.model.Serie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,4 +24,8 @@ public interface SerieRepository extends
 
         @Query("select s from Serie s WHERE s.totalTemporadas <= :quantidadeTemporadas AND s.avaliacao >= :avaliacao")
         List<Serie> seriesPorTemporadaEAvaliacao(int quantidadeTemporadas, double avaliacao);
+
+        @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE e.titulo ILIKE %:trechoEpisodio")
+        List<Episodio> episodioPorTrecho(String trechoEpisodio);
+
 }

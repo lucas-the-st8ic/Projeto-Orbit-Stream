@@ -41,6 +41,7 @@ public class Main {
         7 - Buscar séries por categoria
         8 - Buscar séries por número de temporadas e 
         avaliação
+        9 - Buscar séries por titulo do episodio
         0 - Sair
         -------------------------
         Digite sua opção:  """;
@@ -218,6 +219,12 @@ public class Main {
     private void buscarEpisodioPorTrecho() {
         System.out.print("Digite o nome do episodio para busca: ");
         var trechoEpisodio = input.nextLine();
+        List<Episodio> episodiosEncontrados = repositorio.episodioPorTrecho(trechoEpisodio);
+
+        episodiosEncontrados.forEach(e ->
+                System.out.printf("Série: %s \n Temporada: %s -\n" +
+                        " Episódio: %s - %s\n", e.getSerie().getTitulo(),
+                        e.getTemporada(), e.getNumeroEpisodio(), e.getTitulo()));
     }
 
         /*System.out.println("*** MENU DA ORBIT STREAM ***");
