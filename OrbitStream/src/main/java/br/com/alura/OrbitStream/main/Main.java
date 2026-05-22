@@ -19,6 +19,7 @@ public class Main {
     private List<Serie> series = new ArrayList<>();
     private SerieRepository repositorio;
 
+    private Optional<Serie> serieBuscada;
 
     public Main(SerieRepository repositorio) {
         this.repositorio = repositorio;
@@ -42,6 +43,7 @@ public class Main {
         8 - Buscar séries por número de temporadas e 
         avaliação
         9 - Buscar séries por titulo do episodio
+        10 - Top 5 episodios da série
         0 - Sair
         -------------------------
         Digite sua opção:  """;
@@ -77,6 +79,9 @@ public class Main {
                     break;
                 case 9:
                     buscarEpisodioPorTrecho();
+                    break;
+                case 10:
+                    topEpisodiosPorSerie();
                     break;
                 case 0:
                     System.out.println("Encerrando...");
@@ -156,7 +161,7 @@ public class Main {
         System.out.print("Escolha uma série pelo nome: ");
         var nomeSerie = input.nextLine();
 
-        Optional<Serie> serieBuscada = repositorio.findByTituloContainingIgnoreCase(nomeSerie);
+        serieBuscada = repositorio.findByTituloContainingIgnoreCase(nomeSerie);
         if (serieBuscada.isPresent()) {
             System.out.println("========Dados da série======");
             System.out.println(serieBuscada.get());
@@ -226,6 +231,22 @@ public class Main {
                         " Episódio: %s - %s\n", e.getSerie().getTitulo(),
                         e.getTemporada(), e.getNumeroEpisodio(), e.getTitulo()));
     }
+
+    private void topEpisodiosPorSerie() {
+        buscarSeriePorTitulo();
+        if (serieBuscada.isPresent()) {
+            Serie serie = serieBuscada.get();
+            List<Episodio> topEpisodios = repositorio.topEpisodiosPorSerie(serie);
+
+            topEpisodios.forEach(e ->
+            System.out.printf("Série: %s \n Temporada: %s -\n" +
+                            " Episódio: %s - %s\n", e.getSerie().getTitulo(),
+                    e.getTemporada(), e.getNumeroEpisodio(), e.getTitulo(),
+                    e.getAvaliacao()));
+
+        }
+    }
+
 
         /*System.out.println("*** MENU DA ORBIT STREAM ***");
         System.out.print("Digite o nome da série para busca: ");
