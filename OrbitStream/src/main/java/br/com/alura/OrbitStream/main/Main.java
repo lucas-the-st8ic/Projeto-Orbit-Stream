@@ -25,7 +25,6 @@ public class Main {
         this.repositorio = repositorio;
     }
 
-
     public void exibeMenu() {
 
         var opcao = Integer.MIN_VALUE;
