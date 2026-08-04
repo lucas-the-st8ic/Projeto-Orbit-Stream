@@ -7,5 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SerieController {
 
     @GetMapping("/series")
-    public S
+    public String obterSeries() {
+        return "Aqui vão ser listadas as séries";
+    }
 }
