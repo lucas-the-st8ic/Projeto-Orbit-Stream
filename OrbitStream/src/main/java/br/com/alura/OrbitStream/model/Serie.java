@@ -40,9 +40,7 @@ public class Serie {
         this.sinopse = dadosSerie.sinopse();
     }
 
-    public Serie() {
-
-    }
+    public Serie() {}
 
     public List<Episodio> getEpisodios() {
         return episodios;
