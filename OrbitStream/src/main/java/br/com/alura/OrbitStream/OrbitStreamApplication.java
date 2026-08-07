@@ -6,9 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class OrbitStreamApplication  {
 
-	public static void main(String[] args) {
-    SpringApplication.run(OrbitStreamApplication.class, args);
-
+	static void main(String[] args) {
+        SpringApplication.run(OrbitStreamApplication.class, args);
     }
 }
     /*
