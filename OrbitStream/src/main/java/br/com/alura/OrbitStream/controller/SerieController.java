@@ -4,6 +4,7 @@ import br.com.alura.OrbitStream.dto.SerieDTO;
 import br.com.alura.OrbitStream.service.SerieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,5 +30,10 @@ public class SerieController {
     @GetMapping("/lancamentos")
     public List<SerieDTO> obterLancamentos() {
         return service.obterLancamentos();
+    }
+
+    @GetMapping("/{id}")
+    public SerieDTO obterSeriePorId(@PathVariable Long id) {
+        return service.obterSeriePorId(id);
     }
 }

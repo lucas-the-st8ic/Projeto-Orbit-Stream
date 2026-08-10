@@ -4,10 +4,15 @@ import br.com.alura.OrbitStream.dto.SerieDTO;
 import br.com.alura.OrbitStream.model.Serie;
 import br.com.alura.OrbitStream.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,5 +43,18 @@ public class SerieService {
                         s.getTotalTemporadas(),s.getAvaliacao(),
                         s.getGenero(),s.getAtores(),s.getPoster(),
                         s.getSinopse())).collect(Collectors.toList());
+    }
+
+    public SerieDTO obterSeriePorId(Long id) {
+        Optional<Serie> serie = serieRepository.findById(id);
+        if (serie.isPresent()) {
+            Serie s = serie.get();
+            return new SerieDTO(s.getId(),s.getTitulo(),
+                    s.getTotalTemporadas(),s.getAvaliacao(),
+                    s.getGenero(),s.getAtores(),s.getPoster(),
+                    s.getSinopse());
+        } else  {
+            return null;
+        }
     }
 }
