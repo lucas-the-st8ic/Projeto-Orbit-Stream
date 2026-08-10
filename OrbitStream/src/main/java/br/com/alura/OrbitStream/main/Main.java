@@ -2,6 +2,7 @@ package br.com.alura.OrbitStream.main;
 
 import br.com.alura.OrbitStream.model.*;
 import br.com.alura.OrbitStream.repository.SerieRepository;
+import br.com.alura.OrbitStream.service.ConsultaGeminiAI;
 import br.com.alura.OrbitStream.service.ConsumoApi;
 import br.com.alura.OrbitStream.service.ConverterDados;
 
@@ -44,6 +45,7 @@ public class Main {
         9 - Buscar séries por titulo do episodio
         10 - Top 5 episodios da série
         11 - Buscar episódios a partir de uma data
+        12 - Traduzir sinopses existentes
         0 - Sair
         -------------------------
         Digite sua opção:  """;
@@ -86,6 +88,9 @@ public class Main {
                 case 11:
                     buscarEpisodiosDepoisDeUmaData();
                     break;
+                case 12:
+                    traduzirSinopsesExistentes();
+                    break;
                 case 0:
                     System.out.println("Encerrando...");
                     break;
@@ -95,14 +100,50 @@ public class Main {
         }
     }
 
+    private void traduzirSinopsesExistentes() {
 
+        List<Serie> series = repositorio.findAll();
+
+        for (Serie serie : series) {
+
+            try {
+                System.out.println("Traduzindo: " + serie.getTitulo());
+
+                String sinopseTraduzida = ConsultaGeminiAI.traduzirSinopse(
+                        serie.getSinopse()
+                );
+
+                serie.setSinopse(sinopseTraduzida);
+
+                repositorio.save(serie);
+
+            } catch (Exception e) {
+                System.out.println("Erro ao traduzir " + serie.getTitulo());
+            }
+        }
+
+        System.out.println("Atualização concluída!");
+    }
 
     private void buscarSerieWeb() {
         DadosSerie dados = getDadosSerie();
+
         Serie serie = new Serie(dados);
-        //dadosSeries.add(dados);
+
+        try {
+            String sinopseTraduzida =
+                    ConsultaGeminiAI.traduzirSinopse(dados.sinopse());
+
+            serie.setSinopse(sinopseTraduzida);
+
+        } catch (Exception e) {
+            System.out.println("Erro ao traduzir a sinopse. Mantendo texto original.");
+        }
+
         repositorio.save(serie);
-        System.out.println(dados);
+
+        System.out.println("\n=== Série salva com sucesso ===");
+        System.out.println(serie);
     }
 
     private DadosSerie getDadosSerie() {

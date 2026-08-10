@@ -57,4 +57,27 @@ public class SerieService {
             return null;
         }
     }
+
+
+    //======================================
+
+    public void traduzirSinopsesExistentes() {
+
+        List<Serie> series = serieRepository.findAll();
+        for (Serie serie : series) {
+            try {
+                String sinopseTraduzida =
+                        ConsultaGeminiAI.traduzirSinopse(
+                                serie.getSinopse()
+                        );
+                serie.setSinopse(sinopseTraduzida);
+                serieRepository.save(serie);
+            } catch (Exception e) {
+                System.out.println(
+                        "Erro ao traduzir: "
+                                + serie.getTitulo()
+                );
+            }
+        }
+    }
 }

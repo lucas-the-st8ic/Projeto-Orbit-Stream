@@ -36,4 +36,5 @@ public class SerieController {
     public SerieDTO obterSeriePorId(@PathVariable Long id) {
         return service.obterSeriePorId(id);
     }
+
 }
