@@ -1,7 +1,6 @@
-/*
 package br.com.alura.OrbitStream;
 
-import br.com.alura.OrbitStream.main.Main;
+/*import br.com.alura.OrbitStream.main.Main;
 import br.com.alura.OrbitStream.repository.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,13 +14,11 @@ public class OrbitStreamApplicationSemWeb implements CommandLineRunner {
     private SerieRepository repositorio;
 
 	public static void main(String[] args) {
-    */
-/*
-     Endereços para consulta e testes:
+    *//* Endereços para consulta e testes:
         https://www.omdbapi.com/?t=Sons+of+Anarchy&apikey=32905f12
 
-        https://www.omdbapi.com/?t=Sons+of+Anarchy&Season=1&Episode=1&apikey=32905f12
-    *//*
+        https://www.omdbapi.com/?t=Sons+of+Anarchy&Season=1&Episode=1&apikey=32905f12*//*
+
 
     SpringApplication.run(OrbitStreamApplicationSemWeb.class, args);
 
@@ -34,5 +31,4 @@ public class OrbitStreamApplicationSemWeb implements CommandLineRunner {
         main.exibeMenu();
 
     }
-}
-*/
+}*/
