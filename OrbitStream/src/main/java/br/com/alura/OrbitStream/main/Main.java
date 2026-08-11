@@ -45,7 +45,6 @@ public class Main {
         9 - Buscar séries por titulo do episodio
         10 - Top 5 episodios da série
         11 - Buscar episódios a partir de uma data
-        12 - Traduzir sinopses existentes
         0 - Sair
         -------------------------
         Digite sua opção:  """;
@@ -88,9 +87,9 @@ public class Main {
                 case 11:
                     buscarEpisodiosDepoisDeUmaData();
                     break;
-                case 12:
+/*                case 12:
                     traduzirSinopsesExistentes();
-                    break;
+                    break;*/
                 case 0:
                     System.out.println("Encerrando...");
                     break;
@@ -100,7 +99,7 @@ public class Main {
         }
     }
 
-    private void traduzirSinopsesExistentes() {
+/*    private void traduzirSinopsesExistentes() {
 
         List<Serie> series = repositorio.findAll();
 
@@ -123,7 +122,7 @@ public class Main {
         }
 
         System.out.println("Atualização concluída!");
-    }
+    }*/
 
     private void buscarSerieWeb() {
         DadosSerie dados = getDadosSerie();

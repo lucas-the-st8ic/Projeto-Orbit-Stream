@@ -3,6 +3,8 @@ package br.com.alura.OrbitStream.controller;
 import br.com.alura.OrbitStream.dto.SerieDTO;
 import br.com.alura.OrbitStream.service.SerieService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,4 +39,15 @@ public class SerieController {
         return service.obterSeriePorId(id);
     }
 
+    @GetMapping("/traduzir-sinopses")
+    public ResponseEntity<String> traduzirSinopses() {
+        try {
+            service.traduzirSinopsesExistentes();
+            return ResponseEntity.ok("Sinopses traduzidas e atualizadas com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao traduzir sinopses: " + e.getMessage());
+        }
+    }
 }
