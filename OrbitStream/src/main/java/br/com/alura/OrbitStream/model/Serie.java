@@ -32,7 +32,14 @@ public class Serie {
     public Serie(DadosSerie dadosSerie) {
         this.titulo = dadosSerie.titulo();
         this.totalTemporadas = dadosSerie.totalTemporadas();
-        this.avaliacao = OptionalDouble.of(Double.valueOf(dadosSerie.avaliacao())).orElse(0.0);
+
+        String avaliacaoStr = dadosSerie.avaliacao();
+        if (avaliacaoStr == null || avaliacaoStr.equalsIgnoreCase("N/A")) {
+            this.avaliacao = 0.0;
+        } else {
+            this.avaliacao = Double.valueOf(avaliacaoStr);
+        }
+
         this.genero = Categoria.fromString(dadosSerie.genero()
                 .split(",")[0].trim());
         this.atores = dadosSerie.atores();

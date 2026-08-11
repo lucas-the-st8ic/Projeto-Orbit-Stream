@@ -125,16 +125,31 @@ public class Main {
     }*/
 
     private void buscarSerieWeb() {
-        DadosSerie dados = getDadosSerie();
+        System.out.print("Digite o nome da série para busca: ");
+        var nomeSerie = input.nextLine();
+
+        var json = consumoApi.buscarDados(ENDERECO + nomeSerie.replace(" ", "+") + API_KEY);
+        DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
+
+        if (dados == null || dados.titulo() == null) {
+            System.out.println("\nSérie não encontrada na API. Verifique o nome digitado.\n");
+            return;
+        }
+
+        // Checa pelo título oficial retornado pela API, não pelo texto digitado pelo usuário
+        Optional<Serie> serieExistente = repositorio.findByTituloIgnoreCase(dados.titulo());
+
+        if (serieExistente.isPresent()) {
+            System.out.println("\nA série '" + serieExistente.get().getTitulo() +
+                    "' já está cadastrada no banco de dados!\n");
+            return;
+        }
 
         Serie serie = new Serie(dados);
 
         try {
-            String sinopseTraduzida =
-                    ConsultaGeminiAI.traduzirSinopse(dados.sinopse());
-
+            String sinopseTraduzida = ConsultaGeminiAI.traduzirSinopse(dados.sinopse());
             serie.setSinopse(sinopseTraduzida);
-
         } catch (Exception e) {
             System.out.println("Erro ao traduzir a sinopse. Mantendo texto original.");
         }
