@@ -45,6 +45,8 @@ public class Main {
         9 - Buscar séries por titulo do episodio
         10 - Top 5 episodios da série
         11 - Buscar episódios a partir de uma data
+        12 - Traduzir Sinopses
+        13 - Popular episódios de todas as séries
         0 - Sair
         -------------------------
         Digite sua opção:  """;
@@ -87,9 +89,12 @@ public class Main {
                 case 11:
                     buscarEpisodiosDepoisDeUmaData();
                     break;
-/*                case 12:
+                case 12:
                     traduzirSinopsesExistentes();
-                    break;*/
+                    break;
+                case 13:
+                    popularEpisodiosDeTodasAsSeries();
+                    break;
                 case 0:
                     System.out.println("Encerrando...");
                     break;
@@ -98,33 +103,6 @@ public class Main {
             }
         }
     }
-
-/*
-    private void traduzirSinopsesExistentes() {
-
-        List<Serie> series = repositorio.findAll();
-
-        for (Serie serie : series) {
-
-            try {
-                System.out.println("Traduzindo: " + serie.getTitulo());
-
-                String sinopseTraduzida = ConsultaGeminiAI.traduzirSinopse(
-                        serie.getSinopse()
-                );
-
-                serie.setSinopse(sinopseTraduzida);
-
-                repositorio.save(serie);
-
-            } catch (Exception e) {
-                System.out.println("Erro ao traduzir " + serie.getTitulo());
-            }
-        }
-
-        System.out.println("Atualização concluída!");
-    }
-*/
 
     private void buscarSerieWeb() {
         System.out.print("Digite o nome da série para busca: ");
@@ -321,108 +299,55 @@ public class Main {
         }
     }
 
+    private void popularEpisodiosDeTodasAsSeries() {
+        List<Serie> todasSeries = repositorio.findAll();
 
-        /*System.out.println("*** MENU DA ORBIT STREAM ***");
-        System.out.print("Digite o nome da série para busca: ");
-        var nomeSerie = input.nextLine();
-        var json = consumoApi.buscarDados( ENDERECO + nomeSerie.replace(" ", "+") + API_KEY);
+        System.out.println("Iniciando população de episódios para " + todasSeries.size() + " séries...\n");
 
-        DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
-        System.out.println(dados);
-
-        List<DadosTemporada> temporadas = new ArrayList<>();
-
-        for (int i = 1; i <= dados.totalTemporadas(); i++) {
-            var jsonTemporadas = consumoApi.buscarDados(ENDERECO + nomeSerie.replace(" ", "+") + "&Season=" + i + API_KEY);
-
-            DadosTemporada dadosTemporada = conversor.obterDados(jsonTemporadas, DadosTemporada.class);
-
-            temporadas.add(dadosTemporada);
-        }
-
-        temporadas.forEach(System.out::println);
-
-        for(int i = 0; i < dados.totalTemporadas(); i++){
-            List<DadosEpisodio> episodiosTemporada = temporadas.get(i).listaDeEpisodio();
-
-            for(int j = 0; j < episodiosTemporada.size(); j++) {
-                System.out.println(episodiosTemporada.get(j).titulo());
+        for (Serie serieAtual : todasSeries) {
+            try {
+                if (serieAtual.getEpisodios() != null && !serieAtual.getEpisodios().isEmpty()) {
+                    System.out.println("Já possui episódios, pulando: " + serieAtual.getTitulo());
+                    continue;
+                }
+                System.out.println("Buscando episódios de: " + serieAtual.getTitulo());
+                List<DadosTemporada> temporadas = new ArrayList<>();
+                for (int i = 1; i <= serieAtual.getTotalTemporadas(); i++) {
+                    var json = consumoApi.buscarDados(ENDERECO + serieAtual.getTitulo().replace(" ", "+") + "&season=" + i + API_KEY);
+                    DadosTemporada dadosTemporada = conversor.obterDados(json, DadosTemporada.class);
+                    temporadas.add(dadosTemporada);
+                }
+                List<Episodio> episodios = temporadas.stream()
+                        .flatMap(d -> d.listaDeEpisodio()
+                                .stream()
+                                .map(e -> new Episodio(d.numeroTemporada(), e)))
+                        .collect(Collectors.toList());
+                serieAtual.setEpisodios(episodios);
+                repositorio.save(serieAtual);
+                System.out.println("-> " + episodios.size() + " episódios salvos para " + serieAtual.getTitulo() + "\n");
+            } catch (Exception e) {
+                System.out.println("Erro ao buscar episódios de " + serieAtual.getTitulo() + ": " + e.getMessage() + "\n");
             }
         }
+        System.out.println("Processo concluído!");
+    }
 
-        temporadas.forEach(t -> t.listaDeEpisodio().forEach(e -> System.out.println(e.titulo())));
-        temporadas.forEach(System.out::println);
+    private void traduzirSinopsesExistentes() {
 
-        List<DadosEpisodio> listaEpisodios = temporadas.stream()
-                .flatMap(t -> t.listaDeEpisodio().stream())
-                .collect(Collectors.toList());
-
-        System.out.println("\nTop 10 episodios: ");
-        listaEpisodios.stream()
-                .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
-                .peek(e -> System.out.println("Primeiro Filtro(N/A) " + e))
-                .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
-                .peek(e -> System.out.println("Ordenação " + e))
-                .limit(10)
-                .peek(e -> System.out.println("Limite " + e))
-                .map(e -> e.titulo().toUpperCase())
-                .peek(e -> System.out.println("Mapeamento " + e))
-                .forEach(System.out::println);
-
-        List<Episodio> episodios = temporadas.stream()
-                .flatMap(t -> t.listaDeEpisodio().stream()
-                        .map(d -> new Episodio(t.numeroTemporada(), d))
-                ).collect(Collectors.toList());
-
-
-        episodios.forEach(System.out::println);
-
-
-        System.out.print("Digite um trecho do titulo de algum episódio para pesquisa: ");
-        var trechoTitulo = input.nextLine();
-
-        Optional<Episodio> resultadoBuscaTrecho = episodios.stream()
-                .filter(e -> e.getTitulo().toUpperCase().contains(trechoTitulo.toUpperCase()))
-                .findFirst();
-
-        if (resultadoBuscaTrecho.isPresent()) {
-            System.out.println("Episódio encontrado!");
-            System.out.println("Temporada: " +resultadoBuscaTrecho.get().getTemporada() );
-        } else {
-            System.out.println("Episódio não encontrado!");
+        List<Serie> series = repositorio.findAll();
+        for (Serie serie : series) {
+            try {
+                System.out.println("Traduzindo: " + serie.getTitulo());
+                String sinopseTraduzida = ConsultaGeminiAI.traduzirSinopse(
+                        serie.getSinopse()
+                );
+                serie.setSinopse(sinopseTraduzida);
+                repositorio.save(serie);
+            } catch (Exception e) {
+                System.out.println("Erro ao traduzir " + serie.getTitulo());
+            }
         }
-
-        System.out.print("A partir de que ano você deseja ver os episodios? ");
-        var ano = input.nextInt();
-        input.nextLine();
-
-        LocalDate dataBusca = LocalDate.of(ano, 1, 1);
-
-        DateTimeFormatter formattter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        episodios.stream()
-                .filter(e -> e.getDataLancamento() != null && e.getDataLancamento().isAfter(dataBusca))
-                .forEach(e -> System.out.println(
-                        "Temporada: " +e.getTemporada() +
-                                "\nEpisódio: " +e.getTitulo() +
-                                        "\nData de lançamento: " +e.getDataLancamento().format(formattter)
-                ));
-
-        Map<Integer, Double> avaliacoesPorTemporada = episodios.stream()
-                .filter(e -> e.getAvaliacao() > 0.0)
-                .collect(Collectors.groupingBy(Episodio::getTemporada,
-                        Collectors.averagingDouble(Episodio::getAvaliacao)));
-
-        System.out.println(avaliacoesPorTemporada);
-
-        DoubleSummaryStatistics est = episodios.stream()
-                .filter(e -> e.getAvaliacao() > 0.0)
-                .collect(Collectors.summarizingDouble(Episodio::getAvaliacao));
-
-        System.out.println("Média: " +est.getAverage());
-        System.out.println("Pior Episodio: " +est.getMin());
-        System.out.println("Melhor Episodio: " +est.getMax());
-        System.out.println("Quantidade de episódios avaliados: " +est.getCount());
-*/
+        System.out.println("Atualização concluída!");
+    }
 }
 
