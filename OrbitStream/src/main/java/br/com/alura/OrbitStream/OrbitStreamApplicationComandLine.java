@@ -13,7 +13,7 @@ public class OrbitStreamApplication implements CommandLineRunner {
     @Autowired
     private SerieRepository repositorio;
 
-	public static void main(String[] args) {
+	static void main(String[] args) {
 
 
     SpringApplication.run(OrbitStreamApplication.class, args);

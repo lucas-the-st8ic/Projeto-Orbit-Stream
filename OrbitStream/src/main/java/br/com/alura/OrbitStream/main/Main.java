@@ -87,9 +87,9 @@ public class Main {
                 case 11:
                     buscarEpisodiosDepoisDeUmaData();
                     break;
-                case 12:
+/*                case 12:
                     traduzirSinopsesExistentes();
-                    break;
+                    break;*/
                 case 0:
                     System.out.println("Encerrando...");
                     break;
@@ -99,6 +99,7 @@ public class Main {
         }
     }
 
+/*
     private void traduzirSinopsesExistentes() {
 
         List<Serie> series = repositorio.findAll();
@@ -123,6 +124,7 @@ public class Main {
 
         System.out.println("Atualização concluída!");
     }
+*/
 
     private void buscarSerieWeb() {
         System.out.print("Digite o nome da série para busca: ");
