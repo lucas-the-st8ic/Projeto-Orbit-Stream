@@ -22,7 +22,7 @@ public class OrbitStreamApplication implements CommandLineRunner {
 
         // ==== Descomente a linha abaixo para rodar o menu no terminal ====
          Main main = new Main(repositorio);
-         main.exibeMenu();
+         /*main.exibeMenu();*/
 
         // O servidor web (Tomcat + endpoints REST) SEMPRE sobe automaticamente,
         // independente da linha acima estar comentada ou não.
