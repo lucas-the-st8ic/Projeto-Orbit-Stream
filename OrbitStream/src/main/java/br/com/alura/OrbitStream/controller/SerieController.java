@@ -1,5 +1,6 @@
 package br.com.alura.OrbitStream.controller;
 
+import br.com.alura.OrbitStream.dto.EpisodioDTO;
 import br.com.alura.OrbitStream.dto.SerieDTO;
 import br.com.alura.OrbitStream.service.SerieService;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,14 @@ public class SerieController {
     public SerieDTO obterSeriePorId(@PathVariable Long id) {
         return service.obterSeriePorId(id);
     }
+
+    @GetMapping("/{id}/temporadas/todas")
+    public List<EpisodioDTO> obterTodasTemporadas(@PathVariable Long id){
+    return service.obterTodasTemporadas(id);
+    }
+
+
+
     @GetMapping("/traduzir-sinopses")
     public ResponseEntity<String> traduzirSinopses() {
         try {

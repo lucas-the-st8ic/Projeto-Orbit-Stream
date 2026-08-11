@@ -1,6 +1,8 @@
 package br.com.alura.OrbitStream.service;
 
+import br.com.alura.OrbitStream.dto.EpisodioDTO;
 import br.com.alura.OrbitStream.dto.SerieDTO;
+import br.com.alura.OrbitStream.model.Episodio;
 import br.com.alura.OrbitStream.model.Serie;
 import br.com.alura.OrbitStream.repository.SerieRepository;
 import org.springframework.stereotype.Service;
@@ -51,7 +53,19 @@ public class SerieService {
             return null;
         }
     }
-
+    public List<EpisodioDTO> obterTodasTemporadas(Long id) {
+        Optional<Serie> serie = serieRepository.findById(id);
+        if (serie.isPresent()) {
+            Serie s = serie.get();
+            return s.getEpisodios()
+                    .stream()
+                    .map(e -> new EpisodioDTO(e.getTemporada(),
+                            e.getTitulo(), e.getNumeroEpisodio()))
+                    .collect(Collectors.toList());
+        } else  {
+            return null;
+        }
+    }
 
     //======================================
 
@@ -74,4 +88,5 @@ public class SerieService {
             }
         }
     }
+
 }
