@@ -38,7 +38,6 @@ public class SerieController {
     public SerieDTO obterSeriePorId(@PathVariable Long id) {
         return service.obterSeriePorId(id);
     }
-/*
     @GetMapping("/traduzir-sinopses")
     public ResponseEntity<String> traduzirSinopses() {
         try {
@@ -49,5 +48,5 @@ public class SerieController {
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erro ao traduzir sinopses: " + e.getMessage());
         }
-    }*/
+    }
 }
