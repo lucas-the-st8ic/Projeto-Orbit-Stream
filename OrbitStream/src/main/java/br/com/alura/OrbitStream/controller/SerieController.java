@@ -50,14 +50,11 @@ public class SerieController {
         return service.obterTemporadasPorNumero(id, numero);
     }
 
-    @GetMapping("/categorias/{nomeGenero}")
+    @GetMapping("/categoria/{nomeGenero}")
     public List<SerieDTO> obterSeriesPorCategoria(@PathVariable String nomeGenero) {
         return service.obterSeriesPorCategoria(nomeGenero);
     }
-
-
-
-
+    
     @GetMapping("/traduzir-sinopses")
     public ResponseEntity<String> traduzirSinopses() {
         try {
