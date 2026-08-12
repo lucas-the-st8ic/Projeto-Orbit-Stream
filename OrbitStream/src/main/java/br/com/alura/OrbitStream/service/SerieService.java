@@ -5,6 +5,7 @@ import br.com.alura.OrbitStream.dto.SerieDTO;
 import br.com.alura.OrbitStream.model.Episodio;
 import br.com.alura.OrbitStream.model.Serie;
 import br.com.alura.OrbitStream.repository.SerieRepository;
+import org.springframework.data.repository.core.support.RepositoryMethodInvocationListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +16,11 @@ import java.util.stream.Collectors;
 public class SerieService {
 
     private final SerieRepository serieRepository;
+    private final RepositoryMethodInvocationListener repositoryMethodInvocationListener;
 
-    public SerieService(SerieRepository serieRepository) {
+    public SerieService(SerieRepository serieRepository, RepositoryMethodInvocationListener repositoryMethodInvocationListener) {
         this.serieRepository = serieRepository;
+        this.repositoryMethodInvocationListener = repositoryMethodInvocationListener;
     }
 
     public List<SerieDTO> obterSeries() {
@@ -67,6 +70,17 @@ public class SerieService {
         }
     }
 
+    public List<EpisodioDTO> obterTemporadasPorNumero(Long id, Long numero) {
+        return serieRepository
+                .obterEpisodiosPorTemporada(id, numero)
+                .stream()
+                .map(e -> new EpisodioDTO(e.getTemporada(),
+                        e.getTitulo(), e.getNumeroEpisodio()))
+                .collect(Collectors.toList());
+    }
+
+
+
     //======================================
 
     public void traduzirSinopsesExistentes() {
@@ -89,4 +103,6 @@ public class SerieService {
         }
     }
 
+
 }
+

@@ -45,6 +45,12 @@ public class SerieController {
     return service.obterTodasTemporadas(id);
     }
 
+    @GetMapping("/{id}/temporadas/{numero}")
+    public List<EpisodioDTO> obterTemporadasPorNumero(@PathVariable Long id, @PathVariable Long numero){
+        return service.obterTemporadasPorNumero(id, numero);
+    }
+
+
 
 
     @GetMapping("/traduzir-sinopses")
@@ -58,4 +64,5 @@ public class SerieController {
                     .body("Erro ao traduzir sinopses: " + e.getMessage());
         }
     }
+
 }
