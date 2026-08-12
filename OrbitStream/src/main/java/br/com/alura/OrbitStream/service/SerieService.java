@@ -2,6 +2,7 @@ package br.com.alura.OrbitStream.service;
 
 import br.com.alura.OrbitStream.dto.EpisodioDTO;
 import br.com.alura.OrbitStream.dto.SerieDTO;
+import br.com.alura.OrbitStream.model.Categoria;
 import br.com.alura.OrbitStream.model.Episodio;
 import br.com.alura.OrbitStream.model.Serie;
 import br.com.alura.OrbitStream.repository.SerieRepository;
@@ -80,6 +81,13 @@ public class SerieService {
     }
 
 
+    public List<SerieDTO> obterSeriesPorCategoria(String nomeGenero) {
+
+        Categoria categoria = Categoria.fromPortugues(nomeGenero);
+        return converteDados(serieRepository.findByGenero(categoria));
+    }
+
+
 
     //======================================
 
@@ -102,7 +110,4 @@ public class SerieService {
             }
         }
     }
-
-
 }
-
