@@ -86,8 +86,9 @@ public class SerieService {
     }
 
     public List<EpisodioDTO> obterTop5Episodios(Long id) {
+        Optional<Serie> serie = serieRepository.findById(id);
         return serieRepository
-                .obterTop5EpisodiosDaSerie(id)
+                .obterTop5EpisodiosDaSerie(serie)
                 .stream().map(e -> new EpisodioDTO(e.getTemporada(),
                 e.getTitulo(), e.getNumeroEpisodio())).collect(Collectors.toList());
     }

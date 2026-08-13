@@ -46,7 +46,7 @@ public interface SerieRepository extends
         List<Episodio> obterEpisodiosPorTemporada(Long id, Long numero);
 
         @Query("SELECT e FROM Serie s JOIN s.episodios e " +
-                "WHERE s.id = :id " +
+                "WHERE s.id = :serie " +
                 "ORDER BY e.avaliacao DESC LIMIT 5")
-        List<Episodio> obterTop5EpisodiosDaSerie(Long id);
+        List<Episodio> obterTop5EpisodiosDaSerie(Optional<Serie> serie);
 }
