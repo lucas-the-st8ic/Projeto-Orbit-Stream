@@ -3,7 +3,6 @@ package br.com.alura.OrbitStream.service;
 import br.com.alura.OrbitStream.dto.EpisodioDTO;
 import br.com.alura.OrbitStream.dto.SerieDTO;
 import br.com.alura.OrbitStream.model.Categoria;
-import br.com.alura.OrbitStream.model.Episodio;
 import br.com.alura.OrbitStream.model.Serie;
 import br.com.alura.OrbitStream.repository.SerieRepository;
 import org.springframework.data.repository.core.support.RepositoryMethodInvocationListener;
@@ -80,14 +79,18 @@ public class SerieService {
                 .collect(Collectors.toList());
     }
 
-
     public List<SerieDTO> obterSeriesPorCategoria(String nomeGenero) {
 
         Categoria categoria = Categoria.fromPortugues(nomeGenero);
         return converteDados(serieRepository.findByGenero(categoria));
     }
 
-
+    public List<EpisodioDTO> obterTop5Episodios(Long id) {
+        return serieRepository
+                .obterTop5EpisodiosDaSerie(id)
+                .stream().map(e -> new EpisodioDTO(e.getTemporada(),
+                e.getTitulo(), e.getNumeroEpisodio())).collect(Collectors.toList());
+    }
 
     //======================================
 
